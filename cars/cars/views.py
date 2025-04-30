@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from .models import Car
 from .serializers import CarModel
 from rest_framework.decorators import api_view
+from rest_framework import status
 
 @api_view(['GET', 'POST']) #here ap_view is a decorator
 def get_cars(request): 
@@ -11,4 +12,6 @@ def get_cars(request):
        return JsonResponse(serializer.data, safe = False)
     if request.method == 'POST':
         serializer  = CarModel(data = request.data)
-        
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data , status = status.HTTP_201_CREATED)
