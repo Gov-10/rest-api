@@ -20,4 +20,5 @@ from cars import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cars/', views.get_cars, name='get_cars'),
+    path('car_detail/<int:id>/', views.get_car, name='get_car'),
 ]
